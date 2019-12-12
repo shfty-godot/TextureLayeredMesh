@@ -20,7 +20,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="TextureArrayMesh"
+config/name="TextureLayeredMesh"
 run/main_scene="res://scenes/example.tscn"
 config/icon="res://icon.png"
 
