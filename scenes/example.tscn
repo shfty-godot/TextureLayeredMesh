@@ -1,0 +1,26 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://addons/texture-layered-mesh/src/texture_layered_mesh.gd" type="Script" id=1]
+[ext_resource path="res://materials/array_add.tres" type="Material" id=2]
+[ext_resource path="res://textures/checkerboard.png" type="Texture" id=3]
+[ext_resource path="res://icon.png" type="Texture" id=4]
+
+[sub_resource type="Environment" id=2]
+background_mode = 1
+ambient_light_color = Color( 0.752941, 0.752941, 0.752941, 1 )
+
+[sub_resource type="QuadMesh" id=1]
+
+[node name="Node" type="Node"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
+
+[node name="TextureLayeredMesh" type="Spatial" parent="."]
+script = ExtResource( 1 )
+mesh = SubResource( 1 )
+shader_material = ExtResource( 2 )
+array_data = [ ExtResource( 3 ), ExtResource( 4 ) ]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.7 )

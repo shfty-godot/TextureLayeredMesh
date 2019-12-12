@@ -1,0 +1,26 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type spatial;
+
+uniform sampler2DArray texture_array;
+
+varying float array_size;
+
+void vertex() {
+	array_size = float(textureSize(texture_array, 0).z);
+}
+
+void fragment() {
+	vec3 albedo = vec3(0.0, 0.0, 0.0);
+	
+	for(float i = 0.0; i < array_size; ++i) {
+		albedo += texture(texture_array, vec3(UV, i)).xyz
+	}
+	
+	ALBEDO = albedo;
+}
+"
+
+[resource]
+shader = SubResource( 1 )
