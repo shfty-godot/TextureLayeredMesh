@@ -48,6 +48,8 @@ enum  TextureCompressionSource {
 }
 
 # Exported Variables
+export(bool) var reload setget set_reload
+
 export(Mesh) var mesh setget set_mesh
 export(ShaderMaterial) var shader_material setget set_shader_material
 export(Array, Resource) var array_data setget set_array_data
@@ -60,46 +62,44 @@ export(TextureCompression) var texture_compression = TextureCompression.NONE set
 export(TextureCompressionSource) var texture_compression_source = TextureCompressionSource.GENERIC setget set_texture_compression_source
 export(float) var lossy_quality = 0.7 setget set_lossy_quality
 
+func _ready():
+	regenerate()
+
 # Setters
+func set_reload(new_reload):
+	regenerate()
+
 func set_mesh(new_mesh):
 	if mesh != new_mesh:
 		mesh = new_mesh
-		regenerate()
 
 func set_shader_material(new_shader_material):
 	if shader_material != new_shader_material:
 		shader_material = new_shader_material
-		regenerate()
 
 func set_array_data(new_array_data):
 	if(array_data != new_array_data):
 		array_data = new_array_data
-		regenerate()
 
 func set_layered_texture_type(new_layered_texture_type):
 	if(layered_texture_type != new_layered_texture_type):
 		layered_texture_type = new_layered_texture_type
-		regenerate()
 
 func set_shader_parameter(new_shader_parameter):
 	if(shader_parameter != new_shader_parameter):
 		shader_parameter = new_shader_parameter
-		regenerate()
 
 func set_texture_format(new_texture_format):
 	if(texture_format != new_texture_format):
 		texture_format = new_texture_format
-		regenerate()
 
 func set_texture_compression(new_texture_compression):
 	if(texture_compression != new_texture_compression):
 		texture_compression = new_texture_compression
-		regenerate()
 
 func set_texture_compression_source(new_texture_compression_source):
 	if(texture_compression_source != new_texture_compression_source):
 		texture_compression_source = new_texture_compression_source
-		regenerate()
 
 func set_lossy_quality(new_lossy_quality):
 	if(lossy_quality != new_lossy_quality):
