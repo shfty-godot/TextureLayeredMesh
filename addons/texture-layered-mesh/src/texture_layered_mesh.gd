@@ -157,8 +157,10 @@ func regenerate():
 
 			if image:
 				var image_size = image.get_size()
-				if image_size > max_size:
-					max_size = image_size
+				if image_size.x > max_size.x:
+					max_size.x = image_size.x
+				if image_size.y > max_size.y:
+					max_size.y = image_size.y
 			images.append(image)
 
 	if max_size != Vector2.ZERO:
