@@ -129,7 +129,7 @@ func regenerate():
 	# Create shader material instance
 	print_log("Regenerating material")
 	var new_shader_material = shader_material.duplicate()
-	new_mesh.set_material(new_shader_material)
+	mesh_instance.set_material_override(new_shader_material)
 	print_log("Created shader material: ", new_shader_material)
 
 	if array_data.size() <= 0:
