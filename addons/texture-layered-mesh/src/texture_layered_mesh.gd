@@ -60,7 +60,8 @@ export(String) var shader_parameter = "texture_array" setget set_shader_paramete
 export(TextureFormat) var texture_format = TextureFormat.RGBA8 setget set_texture_format
 export(TextureCompression) var texture_compression = TextureCompression.NONE setget set_texture_compression
 export(TextureCompressionSource) var texture_compression_source = TextureCompressionSource.GENERIC setget set_texture_compression_source
-export(float) var lossy_quality = 0.7 setget set_lossy_quality
+export(float) var texture_lossy_quality = 0.7 setget set_texture_lossy_quality
+export(int, FLAGS, "Mipmap", "Repeat", "Filter", "Anisotropic Filter", "Convert to Linear", "Mirrored Repeat", "Video Surface") var texture_flags = Texture.FLAG_MIPMAPS | Texture.FLAG_ANISOTROPIC_FILTER setget set_texture_flags
 
 func _ready():
 	regenerate()
@@ -101,10 +102,13 @@ func set_texture_compression_source(new_texture_compression_source):
 	if(texture_compression_source != new_texture_compression_source):
 		texture_compression_source = new_texture_compression_source
 
-func set_lossy_quality(new_lossy_quality):
-	if(lossy_quality != new_lossy_quality):
-		lossy_quality = new_lossy_quality
-		regenerate()
+func set_texture_lossy_quality(new_texture_lossy_quality):
+	if(texture_lossy_quality != new_texture_lossy_quality):
+		texture_lossy_quality = new_texture_lossy_quality
+
+func set_texture_flags(new_texture_flags):
+	if(texture_flags != new_texture_flags):
+		texture_flags = new_texture_flags
 
 # Business Logic
 func regenerate():
@@ -164,29 +168,26 @@ func regenerate():
 			images.append(image)
 
 	if max_size != Vector2.ZERO:
-		texture_array.create(max_size.x, max_size.y, images.size(), texture_format)
+		texture_array.create(max_size.x, max_size.y, images.size(), texture_format, texture_flags)
 		var image_idx = 0
 		for image in images:
 			if image:
-				var formatted_image = null
+				var image_copy = image.duplicate()
 
-				var image_format = image.get_format()
+				if(image_copy.is_compressed()):
+					print_log("Warning: Copy is compressed, decompressing...")
+					image_copy.decompress()
+
+				var image_format = image_copy.get_format()
 				if image_format != texture_format:
-					print_log("Warning: Mismatched image formats, creating a copy to convert...")
-					formatted_image = image.duplicate()
+					image_copy.convert(texture_format)
 
-					if(formatted_image.is_compressed()):
-						print_log("Warning: Copy is compressed, decompressing...")
-						formatted_image.decompress()
+				if texture_compression != TextureCompression.NONE:
+					image_copy.compress(texture_compression, texture_compression_source, texture_lossy_quality)
 
-					formatted_image.convert(texture_format)
+				image_copy.generate_mipmaps()
 
-					if texture_compression != TextureCompression.NONE:
-						formatted_image.compress(texture_compression, texture_compression_source, lossy_quality)
-				else:
-					formatted_image = image
-
-				texture_array.set_layer_data(formatted_image, image_idx)
+				texture_array.set_layer_data(image_copy, image_idx)
 				image_idx += 1
 
 		new_shader_material.set_shader_param(shader_parameter, texture_array)
