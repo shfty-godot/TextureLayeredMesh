@@ -15,7 +15,7 @@ _global_script_classes=[ {
 "path": "res://addons/texture-layered-mesh/src/texture_layered_mesh.gd"
 } ]
 _global_script_class_icons={
-"TextureLayeredMesh": ""
+"TextureLayeredMesh": "res://addons/texture-layered-mesh/icons/texture_layered_mesh.svg"
 }
 
 [application]

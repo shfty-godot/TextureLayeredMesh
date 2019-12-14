@@ -1,4 +1,4 @@
-class_name TextureLayeredMesh
+class_name TextureLayeredMesh, "res://addons/texture-layered-mesh/icons/texture_layered_mesh.svg"
 extends Spatial
 tool
 

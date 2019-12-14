@@ -21,12 +21,6 @@ script = ExtResource( 1 )
 mesh = SubResource( 2 )
 shader_material = ExtResource( 2 )
 array_data = [ ExtResource( 3 ), ExtResource( 4 ) ]
-layered_texture_type = 0
-shader_parameter = "texture_array"
-texture_format = 5
-texture_compression = -1
-texture_compression_source = 0
-lossy_quality = 0.7
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.7 )

@@ -2,6 +2,7 @@
 # This makes installing through the AssetLib easier, because no files and folders
 # need to be unchecked.
 
+/extras/ export-ignore
 /materials/ export-ignore
 /scenes/ export-ignore
 /textures/ export-ignore
